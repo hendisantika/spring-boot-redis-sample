@@ -1,6 +1,7 @@
 package id.my.hendisantika.springbootredissample.controller;
 
 import id.my.hendisantika.springbootredissample.model.Book;
+import id.my.hendisantika.springbootredissample.model.Category;
 import id.my.hendisantika.springbootredissample.repository.BookRepository;
 import id.my.hendisantika.springbootredissample.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +50,8 @@ public class BookController {
      * @param size the number of items per page (default is 10).
      * @return a ResponseEntity containing the paginated books, page number, total pages, and total elements.
      */
-    @Cacheable(value = "booksCache", key = "#page + '-' + #size")
     @GetMapping("/books")
+    @Cacheable(value = "booksCache", key = "#page + '-' + #size")
     public ResponseEntity<Map<String, Object>> getBooks(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
         Pageable paging = PageRequest.of(page, size);
         Page<Book> pagedResult = bookRepository.findAll(paging);
@@ -63,5 +64,17 @@ public class BookController {
         response.put("total", pagedResult.getTotalElements());
 
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    /**
+     * Retrieves all categories.
+     * Caches the result to avoid hitting the database on repeated requests.
+     *
+     * @return an Iterable of categories.
+     */
+    @GetMapping("/categories")
+    @Cacheable(value = "categoriesCache")
+    public Iterable<Category> getCategories() {
+        return categoryRepository.findAll();
     }
 }
