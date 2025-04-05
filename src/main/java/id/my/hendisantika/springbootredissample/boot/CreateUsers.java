@@ -1,5 +1,9 @@
 package id.my.hendisantika.springbootredissample.boot;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import id.my.hendisantika.springbootredissample.model.Role;
+import id.my.hendisantika.springbootredissample.model.User;
 import id.my.hendisantika.springbootredissample.repository.RoleRepository;
 import id.my.hendisantika.springbootredissample.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +12,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,4 +39,43 @@ public class CreateUsers implements CommandLineRunner {
     private final UserRepository userRepository;
 
     private final BCryptPasswordEncoder passwordEncoder;
+
+    @Override
+    public void run(String... args) throws Exception {
+        if (userRepository.count() == 0) {
+            // load the roles
+            Role admin = roleRepository.findFirstByname("admin");
+            Role customer = roleRepository.findFirstByname("customer");
+
+            try {
+                // create a Jackson object mapper
+                ObjectMapper mapper = new ObjectMapper();
+                // create a type definition to convert the array of JSON into a List of Users
+                TypeReference<List<User>> typeReference = new TypeReference<List<User>>() {
+                };
+                // make the JSON data available as an input stream
+                InputStream inputStream = getClass().getResourceAsStream("/data/users/users.json");
+                // convert the JSON to objects
+                List<User> users = mapper.readValue(inputStream, typeReference);
+
+                users.stream().forEach((user) -> {
+                    user.setPassword(passwordEncoder.encode(user.getPassword()));
+                    user.addRole(customer);
+                    userRepository.save(user);
+                });
+                log.info(">>>> {} Users Saved!", users.size());
+            } catch (IOException e) {
+                log.info(">>>> Unable to import users: {}", e.getMessage());
+            }
+
+            User adminUser = new User();
+            adminUser.setName("Adminus Admistradore");
+            adminUser.setEmail("admin@example.com");
+            adminUser.setPassword(passwordEncoder.encode("Reindeer Flotilla"));//
+            adminUser.addRole(admin);
+
+            userRepository.save(adminUser);
+            log.info(">>>> Loaded User Data and Created users...");
+        }
+    }
 }
