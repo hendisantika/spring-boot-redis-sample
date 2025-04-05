@@ -69,9 +69,9 @@ public class CreateUsers implements CommandLineRunner {
             }
 
             User adminUser = new User();
-            adminUser.setName("Adminus Admistradore");
-            adminUser.setEmail("admin@example.com");
-            adminUser.setPassword(passwordEncoder.encode("Reindeer Flotilla"));//
+            adminUser.setName("Itadori Yuji");
+            adminUser.setEmail("yuji@yopmail.com");
+            adminUser.setPassword(passwordEncoder.encode("53cret"));//
             adminUser.addRole(admin);
 
             userRepository.save(adminUser);

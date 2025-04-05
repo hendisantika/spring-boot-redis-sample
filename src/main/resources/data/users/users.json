@@ -1,0 +1,71 @@
+[
+  {
+    "id": "yuji_itadori",
+    "name": "Yuji Itadori",
+    "email": "yuji.itadori@jujutsukaisen.com",
+    "password": "hashedPasswordYuji",
+    "passwordConfirm": "hashedPasswordYuji",
+    "roles": [
+      {
+        "id": "role_user",
+        "name": "ROLE_USER"
+      }
+    ]
+  },
+  {
+    "id": "megumi_fushiguro",
+    "name": "Megumi Fushiguro",
+    "email": "megumi.fushiguro@jujutsukaisen.com",
+    "password": "hashedPasswordMegumi",
+    "passwordConfirm": "hashedPasswordMegumi",
+    "roles": [
+      {
+        "id": "role_user",
+        "name": "ROLE_USER"
+      }
+    ]
+  },
+  {
+    "id": "nobara_kugisaki",
+    "name": "Nobara Kugisaki",
+    "email": "nobara.kugisaki@jujutsukaisen.com",
+    "password": "hashedPasswordNobara",
+    "passwordConfirm": "hashedPasswordNobara",
+    "roles": [
+      {
+        "id": "role_user",
+        "name": "ROLE_USER"
+      }
+    ]
+  },
+  {
+    "id": "satoru_gojo",
+    "name": "Satoru Gojo",
+    "email": "satoru.gojo@jujutsukaisen.com",
+    "password": "hashedPasswordSatoru",
+    "passwordConfirm": "hashedPasswordSatoru",
+    "roles": [
+      {
+        "id": "role_admin",
+        "name": "ROLE_ADMIN"
+      }
+    ]
+  },
+  {
+    "id": "ryomen_sukuna",
+    "name": "Ryomen Sukuna",
+    "email": "ryomen.sukuna@jujutsukaisen.com",
+    "password": "hashedPasswordSukuna",
+    "passwordConfirm": "hashedPasswordSukuna",
+    "roles": [
+      {
+        "id": "role_curse",
+        "name": "ROLE_CURSE"
+      },
+      {
+        "id": "role_admin",
+        "name": "ROLE_ADMIN"
+      }
+    ]
+  }
+]

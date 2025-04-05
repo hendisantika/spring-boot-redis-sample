@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Reference;
@@ -42,11 +44,13 @@ import java.util.Set;
  *
  * <p>The class is annotated with {@link RedisHash} to indicate that it is a Redis hash stored in Redis.</p>
  */
+@Data
+@RedisHash
 @JsonIgnoreProperties(value = {"password", "passwordConfirm"}, allowSetters = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-@Data
-@RedisHash
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     /**
