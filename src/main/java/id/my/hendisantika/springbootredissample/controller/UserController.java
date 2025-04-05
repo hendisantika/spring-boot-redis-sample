@@ -31,7 +31,7 @@ public class UserController {
     private final UserRepository userRepository;
 
     @GetMapping
-    public Iterable<User> getUsers(@RequestParam(defaultValue = "") String email) {
+    public Iterable<User> getUsers(@RequestParam(defaultValue = "yuji@yopmail.com") String email) {
         if (email.isEmpty()) {
             return userRepository.findAll();
         } else {

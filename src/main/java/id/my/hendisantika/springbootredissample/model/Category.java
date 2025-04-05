@@ -1,9 +1,13 @@
 package id.my.hendisantika.springbootredissample.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,7 +23,9 @@ import org.springframework.data.redis.core.RedisHash;
 @Data
 @Builder
 @RedisHash
-public class Category {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Category implements Serializable {
     @Id
     private String id;
     private String name;

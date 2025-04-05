@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Reference;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,7 +54,7 @@ import java.util.Set;
 @Data
 @RedisHash
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include

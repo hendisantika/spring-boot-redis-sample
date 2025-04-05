@@ -51,10 +51,10 @@ public class CreateUsers implements CommandLineRunner {
                 // create a Jackson object mapper
                 ObjectMapper mapper = new ObjectMapper();
                 // create a type definition to convert the array of JSON into a List of Users
-                TypeReference<List<User>> typeReference = new TypeReference<List<User>>() {
+                TypeReference<List<User>> typeReference = new TypeReference<>() {
                 };
                 // make the JSON data available as an input stream
-                InputStream inputStream = getClass().getResourceAsStream("/data/users/users.json");
+                InputStream inputStream = getClass().getResourceAsStream("classpath:/data/users/users.json");
                 // convert the JSON to objects
                 List<User> users = mapper.readValue(inputStream, typeReference);
 
