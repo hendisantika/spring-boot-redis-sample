@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +42,9 @@ public class CreateUsers implements CommandLineRunner {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
+    private final ResourceLoader resourceLoader;
+
+
     @Override
     public void run(String... args) throws Exception {
         if (userRepository.count() == 0) {
@@ -54,15 +59,17 @@ public class CreateUsers implements CommandLineRunner {
                 TypeReference<List<User>> typeReference = new TypeReference<>() {
                 };
                 // make the JSON data available as an input stream
-                InputStream inputStream = getClass().getResourceAsStream("classpath:/data/users/users.json");
+                Resource resource = resourceLoader.getResource("classpath:data/users/users.json");
+                InputStream inputStream = resource.getInputStream();
                 // convert the JSON to objects
                 List<User> users = mapper.readValue(inputStream, typeReference);
 
                 users.stream().forEach((user) -> {
                     user.setPassword(passwordEncoder.encode(user.getPassword()));
                     user.addRole(customer);
-                    userRepository.save(user);
+//                    userRepository.save(user);
                 });
+                userRepository.saveAll(users);
                 log.info(">>>> {} Users Saved!", users.size());
             } catch (IOException e) {
                 log.info(">>>> Unable to import users: {}", e.getMessage());
