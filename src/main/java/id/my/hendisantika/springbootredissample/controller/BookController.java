@@ -13,14 +13,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by IntelliJ IDEA.
@@ -76,5 +79,15 @@ public class BookController {
     @Cacheable(value = "categoriesCache")
     public Iterable<Category> getCategories() {
         return categoryRepository.findAll();
+    }
+
+    @GetMapping("/{isbn}")
+    public Book getIsbn(@PathVariable("isbn") String isbn) {
+        Optional<Book> book = bookRepository.findById(isbn);
+        if (book.isPresent()) {
+            return book.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }
