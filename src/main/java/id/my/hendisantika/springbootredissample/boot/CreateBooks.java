@@ -1,7 +1,5 @@
 package id.my.hendisantika.springbootredissample.boot;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import id.my.hendisantika.springbootredissample.model.Book;
 import id.my.hendisantika.springbootredissample.model.Category;
 import id.my.hendisantika.springbootredissample.repository.BookRepository;
@@ -13,6 +11,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;

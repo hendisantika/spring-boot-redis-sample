@@ -1,7 +1,5 @@
 package id.my.hendisantika.springbootredissample.boot;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import id.my.hendisantika.springbootredissample.model.Role;
 import id.my.hendisantika.springbootredissample.model.User;
 import id.my.hendisantika.springbootredissample.repository.RoleRepository;
@@ -14,6 +12,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
