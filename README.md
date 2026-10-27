@@ -1,11 +1,16 @@
 # Spring Boot Redis Sample
 
-A comprehensive Spring Boot 3.5.6 application demonstrating Redis integration with caching, data persistence, and
+[![Java CI with Maven](https://github.com/hendisantika/spring-boot-redis-sample/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/spring-boot-redis-sample/actions/workflows/maven.yml)
+![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.2-brightgreen?logo=springboot)
+![Dependabot](https://img.shields.io/badge/Dependabot-enabled-blue?logo=dependabot)
+
+A comprehensive Spring Boot 4.1.2 application demonstrating Redis integration with caching, data persistence, and
 RESTful APIs.
 
 ## Features
 
-- Spring Boot 3.5.6 with Java 21
+- Spring Boot 4.1.2 with Java 25
 - Redis Stack integration for data storage and caching
 - Spring Data Redis for repository management
 - Spring Security with BCrypt password encoding
@@ -14,24 +19,27 @@ RESTful APIs.
 - Docker Compose integration for easy Redis setup
 - Sample data initialization on startup
 - Testcontainers for integration testing
+- GitHub Actions CI on JDK 25 with automated Dependabot updates
 
 ## Technologies
 
-- **Spring Boot**: 3.5.6
-- **Java**: 21
+- **Spring Boot**: 4.1.2
+- **Java**: 25
 - **Redis**: Redis Stack (latest)
 - **Spring Data Redis**: Repository pattern implementation
 - **Spring Security**: User authentication and authorization
 - **Spring Validation**: Input validation
+- **Jackson 3**: JSON (de)serialization (`tools.jackson.*`)
 - **Lombok**: Reduce boilerplate code
 - **Docker Compose**: Container orchestration
-- **Testcontainers**: Integration testing
+- **Testcontainers**: 2.x for integration testing
+- **GitHub Actions** & **Dependabot**: CI and dependency updates
 
 ## Prerequisites
 
-- Java 21 or higher
-- Docker and Docker Compose
-- Maven 3.x
+- Java 25 or higher
+- Docker and Docker Compose (also required by the Testcontainers tests)
+- Maven 3.9+ (optional, the bundled Maven Wrapper `./mvnw` is recommended)
 
 ## Project Structure
 
@@ -63,6 +71,9 @@ spring-boot-redis-sample/
 ├── src/main/resources/
 │   ├── application.properties                     # Application configuration
 │   └── data/books/                                # Sample book data
+├── .github/
+│   ├── dependabot.yml                             # Dependabot configuration
+│   └── workflows/maven.yml                        # GitHub Actions CI workflow
 ├── compose.yaml                                   # Docker Compose configuration
 └── pom.xml                                        # Maven dependencies
 ```
@@ -95,8 +106,8 @@ The application uses Redis Stack with the following configuration:
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-cd spring-boot-redis-sample2
+git clone https://github.com/hendisantika/spring-boot-redis-sample.git
+cd spring-boot-redis-sample
 ```
 
 ### 2. Start Redis with Docker Compose
@@ -214,7 +225,26 @@ Run tests with:
 ./mvnw test
 ```
 
-The project includes Testcontainers for integration testing with Redis.
+The project includes Testcontainers 2.x for integration testing with Redis, so Docker must be running.
+
+## Continuous Integration
+
+GitHub Actions ([`.github/workflows/maven.yml`](.github/workflows/maven.yml)) runs on every push and pull request to
+`main` (and manually via *workflow_dispatch*):
+
+- Sets up Temurin JDK 25 with Maven dependency caching
+- Builds and tests the project with `./mvnw -B verify`
+- On pushes to `main`, submits the Maven dependency graph to GitHub to improve Dependabot alerts
+
+## Dependency Updates
+
+Dependabot ([`.github/dependabot.yml`](.github/dependabot.yml)) keeps dependencies up to date:
+
+| Ecosystem      | Schedule                    | Grouping                                                  | Commit prefix      |
+|----------------|-----------------------------|-----------------------------------------------------------|--------------------|
+| Maven          | Daily, 05:00 (Asia/Jakarta) | Spring Boot, Testcontainers, other minor & patch updates  | `build(deps)`      |
+| GitHub Actions | Weekly, Monday              | All actions in a single PR                                | `ci(deps)`         |
+| Docker Compose | Weekly, Monday              | Images in `compose.yaml`                                  | `build(deps)`      |
 
 ## Docker Compose Services
 
